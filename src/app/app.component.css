@@ -1,4 +1,4 @@
-
+/* 
 :host ::ng-deep .p-dropdown {
     width: 14rem;
   }
@@ -14,4 +14,18 @@
   .p-field > * {
     display: block;
   }
+   */
+   /* .ui-tooltip {
+    background-color: #333;
+    color: #fff;
+    width: 200em; 
+  
+   
+  } */
+  /* .tooltip .ui-tooltip-text {
+    width: 300em; 
+  }
+  .ui-overlaypanel {
+    background-color: #ccc;
+  } */
   

@@ -11,8 +11,21 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AvatarModule } from 'primeng/avatar';
+import { TooltipModule } from 'primeng/tooltip';
+import { DialogModule } from 'primeng/dialog';
+import { DialogComponent } from './dialog/dialog.component';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { ButtonModule } from 'primeng/button';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { CommonModule } from '@angular/common';
+import { PlotlyViaCDNModule } from 'angular-plotly.js';
+import * as PlotlyJS from 'plotly.js-dist-min';
+import { PlotlyModule } from 'angular-plotly.js';
+import { BarChartComponent } from './bar-chart/bar-chart.component';
+import { PlotlyViaWindowModule } from 'angular-plotly.js';
+PlotlyModule.plotlyjs = PlotlyJS;
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, DialogComponent, BarChartComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -23,7 +36,16 @@ import { AvatarModule } from 'primeng/avatar';
     InputSwitchModule,
     MatSelectModule,
     MatFormFieldModule,
-    AvatarModule
+    AvatarModule,
+    TooltipModule,
+    DialogModule,
+    OverlayPanelModule,
+    ButtonModule,
+    ToggleButtonModule,
+    PlotlyModule,
+    CommonModule,
+    PlotlyViaCDNModule,
+    PlotlyViaWindowModule
   ],
   providers: [],
   bootstrap: [AppComponent],
