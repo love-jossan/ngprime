@@ -9,7 +9,7 @@ import * as fs from 'file-saver';
 export class CountryService {
   API_URL = "https://restcountries.com/v3.1";
   result: any;
-
+url='http://192.168.1.36:8000'
   constructor(private http: HttpClient) {}
 
 
@@ -22,6 +22,11 @@ export class CountryService {
 //   [2007, 1, "Volkswagen ", "Volkswagen Golf", 720, 5.7],
 //   [2007, 1, "Toyota ", "Toyota Corolla", 691, 5.4],
 //   ...];
+
+getDataChart(){
+  return this.http.get(this.url);
+  
+}
 
   }
 

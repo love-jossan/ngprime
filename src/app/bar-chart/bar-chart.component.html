@@ -1,14 +1,15 @@
 
-<plotly-plot [data]="barChartData" [layout]="barChartLayout"></plotly-plot>
-<plotly-plot [data]="datas" [layout]="layout"></plotly-plot>
+<!-- <div>
+    <p-dropdown [options]="colors" (click)="dataBind()" [(ngModel)]="selectedColor"  placeholder="select color"></p-dropdown>
+   <div><plotly-plot [data]="selectedChartData && selectedChartData.length>0?selectedChartData:barChartData" [layout]="barChartLayout"></plotly-plot></div> 
+</div> -->
 
-<!-- --------------------------------------------------- -->
+  
+  <div><plotly-plot [data]="datas" [layout]="layouts"></plotly-plot></div> 
 
 
-
-	
-<!-- <plotly-plot [data]="data" [layout]="layout"></plotly-plot> -->
-<plotly-plot [data]="traceData" [layout]="lay"></plotly-plot>
-<!-- <plotly-plot [data]="barData" [layout]="barLayout"></plotly-plot> -->
-
-      
+  <div>
+    <p-dropdown [options]="colors"  [(ngModel)]="selectedColor"  placeholder="select color"></p-dropdown>
+   <div><plotly-plot [data]="barChartData" [layout]="barChartLayout"></plotly-plot></div> 
+</div>
+ 

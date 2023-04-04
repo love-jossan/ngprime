@@ -6,7 +6,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule} from '@angular/common/http';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -45,7 +45,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     PlotlyModule,
     CommonModule,
     PlotlyViaCDNModule,
-    PlotlyViaWindowModule
+    PlotlyViaWindowModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,93 +1,169 @@
+import { HttpClient } from '@angular/common/http';
+import { ThisReceiver } from '@angular/compiler';
 import { Component } from '@angular/core';
 import * as Plotly from 'plotly.js';
+
+
 
 @Component({
   selector: 'app-bar-chart',
   templateUrl: './bar-chart.component.html',
-  styleUrls: ['./bar-chart.component.css']
+  styleUrls: ['./bar-chart.component.css'],
 })
 export class BarChartComponent {
-  public orangeVisible: boolean = true;
-  barChartData = [{
-    x: ['Category 1', 'Category 2', 'Category 3'],
-    y: [20, 14, 23],
-    type: 'bar'
-  }];
+   
+  public traceData: Plotly.Data[] | undefined;
+  public lay: Partial<Plotly.Layout> | undefined;
+  public data: Plotly.Data[] | undefined;
+  newData:any
+  colors:any=[];
+  barChartData: any;
+  selectedColor=null;
+  selectedChartData:any;
+  constructor(private httpClient: HttpClient) {
+    this.colors = [
+       'blue','red','green','orange'
 
+    ]
+    
+   
+     this.barChartData = [
+ 
+      // {
+      //   dropData: 'Blue',
+      //   x: ['Abc', 'cdef', 'fghi', 'jklm'],
+      //   y: ['880', '81', '152', '804'],
+      //   type: 'bar',
+      // },
+      // {
+      //   dropData: 'Green',
+      //   x: ['a', 'b', 'c', 'd'],
+      //   y: ['1780', '41', '112', '144'],
+      //   type: 'bar',
+      // },
+      // {
+      //   dropData: 'Red',
+      //   x: ['Abc', 'cdef', 'fghi', 'jklm'],
+      //   y: ['180', '51', '12', '104'],
+      //   type: 'bar',
+      // },
+      // {
+      //   dropData:"Orange",
+      //   x: ['Abc', 'cdef', 'fghi', 'jklm'],
+      //   y: ['88', '41', '152', '704'],
+      //   type: 'bar',
+      //   },
+    ];
+  }
   barChartLayout = {
     title: 'Bar Chart',
     xaxis: {
-      title: 'Categories'
+      title: 'Categories',
     },
     yaxis: {
-      title: 'Values'
-    }
+      title: 'Values',
+    },
+
+
+    
   };
-  public traceData: Plotly.Data[] | undefined;
-  public lay: Partial<Plotly.Layout> | undefined;
+  ngOnInit() {
+     this.httpClient.get('http://192.168.1.36:8000').subscribe((data:any) => {  
+      // this.barChartData=data
+      // console.log('chartdata',this.barChartData)
+    this.newData=data[0].y
+     console.log('newdata',this.newData)
+  }); 
 
-   public datas: Plotly.Data[];
-   public data: Plotly.Data[] | undefined;
-  public layout: Partial<Plotly.Layout>;
-
-  constructor() {
-     this.datas= [
-      {
-        x: ['giraffes', 'orangutans', 'monkeys'],
-        y: [20, 14, 23],
-        name: 'SF Zoo',
-        type: 'bar'
-      },
-      {
-        x: ['giraffes', 'orangutans', 'monkeys'],
-        y: [12, 18, 29],
-        name: 'LA Zoo',
-        type: 'bar'
-      }
-    ];
-    this.layout = {barmode: 'group'};
   }
+dataBind(){
+  // if(this.selectedColor=this.barChartData){}
   
-  // ---------------------------------------------------------------------------
-  ngOnInit(){
-  this.traceData = [{
-    x: ['giraffes', 'orangutans', 'monkeys'],
-    y: [20, 14, 23],
-    name: 'SF Zoo',
-    type: 'bar'
-  },
-  
-   {
-    x: ['giraffes', 'orangutans', 'monkeys'],
-    y: [12, 18, 29],
-    name: 'LA Zoo',
-    type: 'bar'
-  }]
-  
-  
-  this.lay = {barmode: 'stack'};
 }
-public barData = [  { x: ['A', 'B', 'C'], y: [3, 5, 7], type: 'bar', name: 'Series 1' },
-  { x: ['A', 'B', 'C'], y: [2, 6, 4], type: 'bar', name: 'Series 2' },
-  { x: ['A', 'B', 'C'], y: [4, 3, 5], type: 'bar', name: 'Series 3' }
-];
+  // dataBind(){
+    // let selected = this.selectedColor;
+    // this.selectedChartData=[]
+    // console.log(selected)
+    // this.barChartData.forEach((data:any) => {
+    //   if(data.dropData==selected){
+    //     this.selectedChartData.push(data)
+       
+    //   }
+     
+    // });
+  
+  // }
 
-public barLayout = {
-  barmode: 'stack'
-};
-  // Plotly.newPlot('myDiv', data, layout);
+
+  // dataCall(){
+   
+  
+  // }
+
+  datas = [
+    { x: [], y: [1000,2000,1500], type: 'bar', name: 'Blue' },
+      { x: ['a','b','c'], y: [1200,1300,1400], type: 'bar', name: ' Orange' },
+      { x: ['a','b','c'], y: [1300,500,600], type: 'bar', name: 'Green' },
+      { x: ['a','b','c'], y: [1000,1500,1600], type: 'bar', name: 'Red' }
+  ];
+  
+  layouts = {
+    barmode: 'group',
+    xaxis: { title: 'Colors' },
+    yaxis: { title: 'Values' },
+    updatemenus: [
+      {
+        buttons: [
+          {
+            args: [{'visible': [true, true]}],
+            label: 'All',
+            method: 'update',
+            
+          },
+          {
+            args: [{'visible': [true, false,false,false]}],
+            label: 'Blue',
+            method: 'update',
+            marker: {
+              color: 'rgba(58,200,225,.5)',
+             background:'red'
+              }
+            
+          },
+          {
+            args: [{'visible': [false, true,false,false]}],
+            label: 'Orange',
+            method: 'update',
+            paper_bgcolor: 'rgba(245,246,249,1)',
+  plot_bgcolor: 'rgba(245,246,249,1)',
+          },
+          {
+            args: [{'visible': [false, false,true,false]}],
+            label: 'Green',
+            method: 'update',
+            
+          },
+          {
+            args: [{'visible': [false, false,false,true]}],
+            label: 'Red',
+            method: 'update',
+            
+          },
+          
+        ],
+        direction: 'down',
+        showactive: true,
+        type: 'dropdown',
+        x: 0.05,
+        xanchor: 'left',
+        y: 1.2,
+        yanchor: 'top'
+      }
+    ]
+  };
+  
+  
   
 
 
-// ngOnInit(){
-//    this.data = [{
-//   values: [19, 26, 55],
-//   labels: ['Residential', 'Non-Residential', 'Utility'],
-//   type: 'pie'
-// }];
-
-// var layout = {
-//   height: 400,
-//   width: 500
-// };}
 }
