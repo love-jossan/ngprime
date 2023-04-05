@@ -5,11 +5,12 @@
 </div> -->
 
 
-  <div><plotly-plot [data]="datas" [layout]="layouts"></plotly-plot></div>
+  <!-- <div><plotly-plot [data]="datas" [layout]="layouts"></plotly-plot></div> -->
 
 
-  <div>
-    <p-dropdown [options]="colors"  [(ngModel)]="selectedColor"  placeholder="select color"></p-dropdown>
+  <div >
+    <p-dropdown [options]="colors "  [(ngModel)]="selectedColor" 
+    (onChange)="subClassData(id)"   placeholder="Sub Class"></p-dropdown>
    <div><plotly-plot [data]="traces" [layout]="layout"></plotly-plot></div>
 </div>
 
