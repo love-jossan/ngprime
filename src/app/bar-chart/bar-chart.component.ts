@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { ThisReceiver } from '@angular/compiler';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as Plotly from 'plotly.js';
 
 
@@ -10,8 +10,8 @@ import * as Plotly from 'plotly.js';
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.css'],
 })
-export class BarChartComponent {
-   
+export class BarChartComponent implements OnInit{
+
   public traceData: Plotly.Data[] | undefined;
   public lay: Partial<Plotly.Layout> | undefined;
   public data: Plotly.Data[] | undefined;
@@ -20,15 +20,49 @@ export class BarChartComponent {
   barChartData: any;
   selectedColor=null;
   selectedChartData:any;
+   testData=[
+    {
+      percentage_operations_processed:['78%', '0%', '0%', '7%'],
+      percentage_ticketed_matches:['52%', '0%', '0%', '37%'],
+      ticketed_matches_identified:['3815', '5', '5', '2709'],
+      wanted_matches_identified:['0', '0', '0', '61'],
+      x: ['Blue', 'Green', 'Red', 'Orange' ],
+      y: ['172880', '41', '152', '14704',],
+    }
+  ]
+
+
+  // Define the layout options
+   layout = {
+    title: 'Column Chart',
+    xaxis: {
+      title: 'Categories',
+    },
+    yaxis: {
+      title: 'Values',
+    },
+  };
+ newChartData=[
+       {
+        dropData: 'Blue',
+        x: ['Blue', 'Green', 'Red', 'Orange'],
+        y: ['172880', '41', '152', '14704'],
+        type: 'bar',
+      },
+ ]
+  traces:any[]=[];
+
+
+
   constructor(private httpClient: HttpClient) {
     this.colors = [
        'blue','red','green','orange'
 
     ]
-    
-   
-     this.barChartData = [
- 
+
+
+    //  this.barChartData = [
+
       // {
       //   dropData: 'Blue',
       //   x: ['Abc', 'cdef', 'fghi', 'jklm'],
@@ -53,32 +87,55 @@ export class BarChartComponent {
       //   y: ['88', '41', '152', '704'],
       //   type: 'bar',
       //   },
-    ];
-  }
-  barChartLayout = {
-    title: 'Bar Chart',
-    xaxis: {
-      title: 'Categories',
-    },
-    yaxis: {
-      title: 'Values',
-    },
-
-
-    
-  };
-  ngOnInit() {
-     this.httpClient.get('http://192.168.1.36:8000').subscribe((data:any) => {  
-      // this.barChartData=data
-      // console.log('chartdata',this.barChartData)
-    this.newData=data[0].y
-     console.log('newdata',this.newData)
-  }); 
+    // ];
 
   }
-dataBind(){
-  // if(this.selectedColor=this.barChartData){}
-  
+
+  ngOnInit(): void {
+    this.getReports()
+
+  }
+
+getReports(){
+  this.httpClient.get('http://192.168.1.36:8000').subscribe((data:any) => {
+  data.forEach((data:any) => {
+    this.traces.push({
+      x: data.x,
+      y: data.y.map(Number),
+      type: 'bar',
+      name: 'Vehicles Processed'
+    });
+
+    this.traces.push({
+      x: data.x,
+      y: data.wanted_matches_identified.map(Number),
+      type: 'bar',
+      name: 'Wanted Matches'
+    });
+
+    this.traces.push({
+      x: data.x,
+      y: data.ticketed_matches_identified.map(Number),
+      type: 'bar',
+      name: 'Ticket Matches'
+    });
+
+    this.traces.push({
+      x: data.x,
+      y: data.percentage_ticketed_matches,
+      type: 'bar',
+      name: 'Ticket Matches in %'
+    });
+
+    this.traces.push({
+      x: data.x,
+      y: data.percentage_operations_processed,
+      type: 'bar',
+      name: 'Percentage of operations processed'
+    });
+  });
+});
+
 }
   // dataBind(){
     // let selected = this.selectedColor;
@@ -87,17 +144,17 @@ dataBind(){
     // this.barChartData.forEach((data:any) => {
     //   if(data.dropData==selected){
     //     this.selectedChartData.push(data)
-       
+
     //   }
-     
+
     // });
-  
+
   // }
 
 
   // dataCall(){
-   
-  
+
+
   // }
 
   datas = [
@@ -106,7 +163,7 @@ dataBind(){
       { x: ['a','b','c'], y: [1300,500,600], type: 'bar', name: 'Green' },
       { x: ['a','b','c'], y: [1000,1500,1600], type: 'bar', name: 'Red' }
   ];
-  
+
   layouts = {
     barmode: 'group',
     xaxis: { title: 'Colors' },
@@ -118,7 +175,7 @@ dataBind(){
             args: [{'visible': [true, true]}],
             label: 'All',
             method: 'update',
-            
+
           },
           {
             args: [{'visible': [true, false,false,false]}],
@@ -128,7 +185,7 @@ dataBind(){
               color: 'rgba(58,200,225,.5)',
              background:'red'
               }
-            
+
           },
           {
             args: [{'visible': [false, true,false,false]}],
@@ -141,15 +198,15 @@ dataBind(){
             args: [{'visible': [false, false,true,false]}],
             label: 'Green',
             method: 'update',
-            
+
           },
           {
             args: [{'visible': [false, false,false,true]}],
             label: 'Red',
             method: 'update',
-            
+
           },
-          
+
         ],
         direction: 'down',
         showactive: true,
@@ -161,9 +218,4 @@ dataBind(){
       }
     ]
   };
-  
-  
-  
-
-
 }
