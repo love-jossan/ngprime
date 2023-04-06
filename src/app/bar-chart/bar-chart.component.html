@@ -1,16 +1,153 @@
 
-<!-- <div>
-    <p-dropdown [options]="colors" (click)="dataBind()" [(ngModel)]="selectedColor"  placeholder="select color"></p-dropdown>
-   <div><plotly-plot [data]="selectedChartData && selectedChartData.length>0?selectedChartData:barChartData" [layout]="barChartLayout"></plotly-plot></div>
-</div> -->
-
-
-  <!-- <div><plotly-plot [data]="datas" [layout]="layouts"></plotly-plot></div> -->
-
-
-  <div >
+  <!-- <div >
     <p-dropdown [options]="colors "  [(ngModel)]="selectedColor" 
     (onChange)="subClassData(id)"   placeholder="Sub Class"></p-dropdown>
    <div><plotly-plot [data]="traces" [layout]="layout"></plotly-plot></div>
 </div>
 
+
+
+<plotly-plot class="first" [data]="barChartData"    [layout]="layouts"></plotly-plot>
+<plotly-plot class="secound" [data]="pieChartData1" [layout]="layouts"></plotly-plot>
+<plotly-plot class="fourth" [data]="donut" [layout]="layoutss"></plotly-plot>
+<plotly-plot  [data]="outHover" [layout]="layoutsss"></plotly-plot> -->
+ 
+
+<div class="container">
+<p-dropdown   [options]="cities" [(ngModel)]="selectedCity"  placeholder="select color"></p-dropdown>
+<p-dropdown class="ml-1" [options]="cities" [(ngModel)]="selectedCity"  placeholder="select color"></p-dropdown>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div >
+          Sales
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">$2,500</h5>
+          <p class="card-text">Total sales this month</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <!-- <div class="card-header"> -->
+          <div>
+          Users
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">1,500</h5>
+          <p class="card-text">Total number of users</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div >
+          Traffic
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">10,000</h5>
+          <p class="card-text">Total website traffic</p>
+        </div>
+      </div>
+    </div>
+  
+
+
+<!-- ============================================== -->
+<!-- <div class="container"> -->
+  
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          Pie Chart
+        </div>
+        <div class="card-body">
+          <div id="pie-chart"><plotly-plot class="first" [data]="barChartData"    [layout]="layouts"></plotly-plot></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          Bar Chart
+        </div>
+        <div class="card-body">
+          <div id="bar-chart"><plotly-plot class="secound" [data]="pieChartData1" [layout]="layouts"></plotly-plot></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          Bar Chart
+        </div>
+        <div class="card-body">
+          <div id="bar-chart"><plotly-plot class="secound" [data]="pieChartData2" [layout]="layouts"></plotly-plot></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- </div> -->
+<!-- ========================================================= -->
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Line Chart
+        </div>
+        <div class="card-body">
+          <div id="line-chart"></div>
+          <p class="card-text">Total sales over time</p>
+<plotly-plot class="first" [data]="barChartData"    [layout]="layouts"></plotly-plot>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Area Chart
+        </div>
+        <div class="card-body">
+          <div id="area-chart"></div>
+          <p class="card-text">Website traffic by source</p>
+          <plotly-plot class="fourth" [data]="donut" [layout]="layoutss"></plotly-plot>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div >
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Navbar</a>
+    </nav>
+    <p-dropdown   [options]="cities" [(ngModel)]="selectedCity"  placeholder="select color"></p-dropdown>
+<p-dropdown class="ml-1" [options]="cities" [(ngModel)]="selectedCity"  placeholder="select color"></p-dropdown>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Pie Chart
+          </div>
+          <div class="card-body">
+            <div id="pie-chart"><plotly-plot class="first" [data]="barChartData"    [layout]="layouts"></plotly-plot></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            Bar Chart
+          </div>
+          <div class="card-body">
+            <div id="bar-chart"><plotly-plot class="secound" [data]="pieChartData1" [layout]="layouts"></plotly-plot></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

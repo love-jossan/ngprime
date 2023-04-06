@@ -1,0 +1,24 @@
+.plotly-graph-div .slice {
+    fill: transparent;
+    stroke: none;
+  }
+  
+  .plotly-graph-div .slice:first-child {
+    fill: #636efa;
+    stroke: none;
+  }
+  
+  .plotly-graph-div .slice:nth-child(2) {
+    fill: #EF553B;
+    stroke: none;
+  }
+  
+  .plotly-graph-div .slice:last-child {
+    fill: #00cc96;
+    stroke: none;
+  }
+  
+  .plotly-graph-div .infolayer .legend .scrollbox .traces .trace:first-child .legendtoggle {
+    display: none;
+  }
+ 

@@ -4,11 +4,15 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as Plotly from 'plotly.js';
 import { ChartService } from '../chart.service';
+import { PlotlyModule } from 'angular-plotly.js';
+import { PlotlyViaCDNModule } from 'angular-plotly.js';
+
 
 @Component({
   selector: 'app-bar-chart',
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.css'],
+  providers: [PlotlyViaCDNModule, PlotlyModule]
 })
 export class BarChartComponent implements OnInit {
   public traceData: Plotly.Data[] | undefined;
@@ -16,6 +20,8 @@ export class BarChartComponent implements OnInit {
   public data: Plotly.Data[] | undefined;
   newData: any;
   colors: any = [];
+  cities :any=['green','blue','orange']
+  selectedCity=''
   // barChartData: any;
   // barChartId:any
   selectedColor = null;
@@ -24,16 +30,9 @@ export class BarChartComponent implements OnInit {
   barChartId: any;
   id:any
   
-  //  testData=[
-  //   {
-  //     percentage_operations_processed:['78%', '0%', '0%', '7%'],
-  //     percentage_ticketed_matches:['52%', '0%', '0%', '37%'],
-  //     ticketed_matches_identified:['3815', '5', '5', '2709'],
-  //     wanted_matches_identified:['0', '0', '0', '61'],
-  //     x: ['Blue', 'Green', 'Red', 'Orange' ],
-  //     y: ['172880', '41', '152', '14704',],
-  //   }
-  // ]
+
+
+  
 
   // Define the layout options
   layout = {
@@ -45,41 +44,22 @@ export class BarChartComponent implements OnInit {
       title: 'Values',
     },
   };
-  // newChartData = [
-  //   {
-  //     dropData: 'Blue',
-  //     x: ['Blue', 'Green', 'Red', 'Orange'],
-  //     y: ['172880', '41', '152', '14704'],
-  //     type: 'bar',
-  //   },
-  // ];
-
   traces: any[] = [];
-  // tracess: any[] = [];
-
   constructor(
     private chartService:ChartService,
     private httpClient: HttpClient,
     private route: ActivatedRoute,
     private router: Router
   ) {
-    // this.barChartId=this.route.snapshot.paramMap.get('id');
-    // this.colors = [
-    //    'blue','red','green','orange'
-    // ]
-  }
-
-  ngOnInit(): void {
-    this.getReports();
   }
   
-  // getReportsId(id: number) {
-  //   this.httpClient
-  //     .get('http://192.168.1.36:8000/get_sub_org/${id}')
-  //     .subscribe((res: any) => {
-  //       console.log('_Id', res);
-  //     });
-  // }
+  ngOnInit(): void {
+    this.getReports();
+  
+   
+    
+  }
+  
   subClassData(id:any){
     console.log(this.selectedColor)
     let index=this.colors.indexOf(this.selectedColor)
@@ -175,84 +155,75 @@ export class BarChartComponent implements OnInit {
       });
     });
   }
-  // dataBind(){
-  // let selected = this.selectedColor;
-  // this.selectedChartData=[]
-  // console.log(selected)
-  // this.barChartData.forEach((data:any) => {
-  //   if(data.dropData==selected){
-  //     this.selectedChartData.push(data)
+ 
+// ================================================new chart===================================
+chart:any=['kjk', 'jkhj', 'kjkjh'] 
+selectedchart=null
+  barChartData = [  {    x: ['A', 'B', 'C', 'D'],
+    y: [10, 20, 30, 40],
+    type: 'bar'
+  }
+];
 
-  //   }
+  pieChartData1 = [  {    values: [99, 5, 20, 1],
+    labels: ['A', 'B', 'C', 'D'],
+    type: 'pie'
+  }
+];
 
-  // });
+   pieChartData2 = [  {    values: [80, 40, 30, 4],
+    labels: ['E', 'F', 'G', 'H'],
+    type: 'pie'
+  }
+];
 
-  // }
+layouts = {
+  title: 'My Dashboard'
+};
 
-  // dataCall(){
+// ==================================donut chart
 
-  // }
-  // =================================================================================
+donut : any = [
+  {
+    values: [50, 30, 20],
+    labels: ['Apples', 'Oranges', 'Bananas'],
+    hole: 0.6,
+    type: 'pie',
+  },
+];
+layoutss: any = {
+  height: 400,
+  width: 500,
+};
 
-  // datas = [
-  //   { x: [], y: [1000,2000,1500], type: 'bar', name: 'Blue' },
-  //     { x: ['a','b','c'], y: [1200,1300,1400], type: 'bar', name: ' Orange' },
-  //     { x: ['a','b','c'], y: [1300,500,600], type: 'bar', name: 'Green' },
-  //     { x: ['a','b','c'], y: [1000,1500,1600], type: 'bar', name: 'Red' }
-  // ];
+// ==============================
+ outHover = [
+  {
+      x: ['A', 'B', 'C', 'D'],
+      y: [100000, 200, 1, 152],
+      type: 'bar',
+      text: [172000, 20, 0, 15],
+      textposition: 'auto'
+  }
+];
 
-  // layouts = {
-  //   barmode: 'group',
-  //   xaxis: { title: 'Colors' },
-  //   yaxis: { title: 'Values' },
-  //   updatemenus: [
-  //     {
-  //       buttons: [
-  //         {
-  //           args: [{'visible': [true, true]}],
-  //           label: 'All',
-  //           method: 'update',
+ layoutsss = {
+  xaxis: {title: 'Category'},
+  yaxis: {title: 'Value'},
+  title: 'My Bar Chart'
+};
 
-  //         },
-  //         {
-  //           args: [{'visible': [true, false,false,false]}],
-  //           label: 'Blue',
-  //           method: 'update',
-  //           marker: {
-  //             color: 'rgba(58,200,225,.5)',
-  //            background:'red'
-  //             }
+          
 
-  //         },
-  //         {
-  //           args: [{'visible': [false, true,false,false]}],
-  //           label: 'Orange',
-  //           method: 'update',
-  //           paper_bgcolor: 'rgba(245,246,249,1)',
-  // plot_bgcolor: 'rgba(245,246,249,1)',
-  //         },
-  //         {
-  //           args: [{'visible': [false, false,true,false]}],
-  //           label: 'Green',
-  //           method: 'update',
 
-  //         },
-  //         {
-  //           args: [{'visible': [false, false,false,true]}],
-  //           label: 'Red',
-  //           method: 'update',
+// ===================================
 
-  //         },
 
-  //       ],
-  //       direction: 'down',
-  //       showactive: true,
-  //       type: 'dropdown',
-  //       x: 0.05,
-  //       xanchor: 'left',
-  //       y: 1.2,
-  //       yanchor: 'top'
-  //     }
-  //   ]
-  // };
+  
+
+
+
+
+
+
 }
