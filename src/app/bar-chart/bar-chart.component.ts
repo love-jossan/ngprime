@@ -1,18 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { ThisReceiver } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit ,Directive, Input} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as Plotly from 'plotly.js';
 import { ChartService } from '../chart.service';
 import { PlotlyModule } from 'angular-plotly.js';
 import { PlotlyViaCDNModule } from 'angular-plotly.js';
 
-
 @Component({
   selector: 'app-bar-chart',
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.css'],
-  providers: [PlotlyViaCDNModule, PlotlyModule]
+  providers: [PlotlyViaCDNModule, PlotlyModule],
 })
 export class BarChartComponent implements OnInit {
   public traceData: Plotly.Data[] | undefined;
@@ -20,19 +19,22 @@ export class BarChartComponent implements OnInit {
   public data: Plotly.Data[] | undefined;
   newData: any;
   colors: any = [];
-  cities :any=['green','blue','orange']
-  selectedCity=''
-  // barChartData: any;
-  // barChartId:any
-  selectedColor = null;
+  chartType:any
+  selectedChart=null
+  pieChartData1: any;
+  pieChartData2: any;
+  pieChartData3: any;
+barData:any
+  barChartData1: any[] = [];
+  barChartData2: any;
+  barChartData3:any
+  barChartData4:any
+  barChartData5:any
+  donut: any;
+  selectedSubClass ='';
   selectedChartData: any;
   subClass: any;
-  barChartId: any;
-  id:any
-  
-
-
-  
+  id: any;
 
   // Define the layout options
   layout = {
@@ -45,181 +47,209 @@ export class BarChartComponent implements OnInit {
     },
   };
   traces: any[] = [];
+  barChartD: any;
+  @Input() maxHeight: any;
   constructor(
-    private chartService:ChartService,
+    private chartService: ChartService,
     private httpClient: HttpClient,
     private route: ActivatedRoute,
-    private router: Router
-  ) {
-  }
-  
-  ngOnInit(): void {
-    this.getReports();
-  
-   
-    
-  }
-  
-  subClassData(id:any){
-    console.log(this.selectedColor)
-    let index=this.colors.indexOf(this.selectedColor)
-    console.log(index)
-    if(index !==-1){
-      this.chartService.subClassData(index+1).subscribe((res:any)=>{
-        console.log('subclassdata',res)
-        this.traces=[]
-        res.forEach((data: any) => {
-          this.traces.push({
-            x: data.x,
-            y: data.y.map(Number),
-            type: 'bar',
-            name: 'Vehicles Processed',
-          });
-  
-          this.traces.push({
-            x: data.x,
-            y: data.wanted_matches_identified.map(Number),
-            type: 'bar',
-            name: 'Wanted Matches',
-          });
-  
-          this.traces.push({
-            x: data.x,
-            y: data.ticketed_matches_identified.map(Number),
-            type: 'bar',
-            name: 'Ticket Matches',
-          });
-  
-          this.traces.push({
-            x: data.x,
-            y: data.percentage_ticketed_matches,
-            type: 'bar',
-            name: 'Ticket Matches in %',
-          });
-  
-          this.traces.push({
-            x: data.x,
-            y: data.percentage_operations_processed,
-            type: 'bar',
-            name: 'Percentage of operations processed',
-          });
-        });
+    private router: Router,
+    private el: ElementRef
+  ) {}
 
-        })
+  ngOnInit(): void {
+    this.el.nativeElement.style.overflowY = 'scroll';
+    this.el.nativeElement.style.maxHeight = this.maxHeight || '700px';
+  
+    this.httpClient.get('http://192.168.1.36:8000').subscribe((data: any) => {
+      this.barData=data
+      console.log('barData', this.barData);
+    });
+    this.getReports();
+  }
+  percentage:any
+  subClassData(id: number) {
+   
+   
+    console.log(this.selectedSubClass);
+    let index = this.colors.indexOf(this.selectedSubClass);
+    console.log(index);
+    if (index !== -1) {
+      this.chartService.subClassData(index + 1).subscribe((data: any) => {
+        console.log('subclassdata', data);
+       this.percentage =data[0].percentage_operations_processed
+
+        data.forEach((data: any) => {
+         
+          if (data.percentage_ticketed_matches.every((value: number) => value === 0)) {
+            this.pieChartData2 = [
+              {
+                values: [100],
+                labels: ['No data available'],
+                type: 'pie',
+                textinfo: 'none',
+              },
+            ];
+          }
+          else{
+          this.pieChartData2 = [
+            {
+              values: data.percentage_ticketed_matches,
+              labels: data.x,
+              type: 'pie',
+              // textinfo: 'percent',
+              texttemplate: '%{value}%',
+            },
+          ];
+        }
+
+          if (data.wanted_matches_identified.every((value: number) => value === 0)) {
+            this.pieChartData3 = [
+              {
+                values: [100],
+                labels: ['No data available '],
+                type: 'pie',
+                textinfo: 'none',
+              },
+            ];
+          }
+          else{
+          this.pieChartData3 = [
+            {
+              values: data.wanted_matches_identified,
+              labels: data.x,
+              type: 'pie',
+              // textinfo: 'percent',
+              texttemplate: '%{value}%',
+            },
+          ];
+        }
+
+          if (data.percentage_operations_processed.every((value: number) => value === 0)) {
+            this.donut = [
+              {
+                values: [100],
+                labels: ['No data available'],
+                type: 'pie',
+                textinfo: 'none',
+              },
+            ];
+          }
+          else{
+          this.donut = [
+            {
+              values: data.percentage_operations_processed,
+              labels: data.x,
+              hole: 0.6,
+              type: 'pie',
+              texttemplate: '%{value}%',
+            },
+          ];
+        }
+          this.barChartData1 = [{ x: data.x, y: data.y, type: 'bar' }];
+          this.barChartData2 = [
+            { x: data.x, y: data.ticketed_matches_identified, type: 'bar' },
+          ];
+          // this.barChartData3 = [{ x: data.x, y: data.wanted_matches_identified, type: 'bar' }];
+        });
+      });
     }
   }
   getReports() {
-    
     this.httpClient.get('http://192.168.1.36:8000').subscribe((data: any) => {
       console.log('data', data);
-      // this.barChartData = data;
+  
+      this.barChartD = data[0]?.total_vehicle_record;
       // console.log('data1',this.barChartData)
       this.colors = data[0].x;
-      this.barChartId=data[0].Organisation_id;
-      this.traces=[];
       data.forEach((data: any) => {
-        this.traces.push({
-          x: data.x,
-          y: data.y.map(Number),
-          type: 'bar',
-          name: 'Vehicles Processed',
-        });
+        // this.traces.push({
+        //   x: data.x,
+        //   y: data.percentage_operations_processed,
+        //   type: 'bar',
+        //   name: 'Percentage of operations processed',
+        // });
 
-        this.traces.push({
-          x: data.x,
-          y: data.wanted_matches_identified.map(Number),
-          type: 'bar',
-          name: 'Wanted Matches',
-        });
+        this.pieChartData1 = [{ values: data, labels: data, type: 'pie' }];
 
-        this.traces.push({
-          x: data.x,
-          y: data.ticketed_matches_identified.map(Number),
-          type: 'bar',
-          name: 'Ticket Matches',
-        });
+        this.pieChartData2 = [
+          {
+            values: data.percentage_ticketed_matches,
+            labels: data.x,
+            type: 'pie',
+            // textinfo: 'percent',
+            texttemplate: '%{value}%',
+          },
+        ];
+        this.pieChartData3 = [
+          {
+            values: data.wanted_matches_identified,
+            labels: data.x,
+            type: 'pie',
+            // textinfo: 'percent',
+            texttemplate: '%{value}%',
+          },
+        ];
 
-        this.traces.push({
-          x: data.x,
-          y: data.percentage_ticketed_matches,
-          type: 'bar',
-          name: 'Ticket Matches in %',
-        });
+        this.donut = [
+          {
+            values: data.percentage_operations_processed,
+            labels: data.x,
+            hole: 0.6,
+            type: 'pie',
+            texttemplate: '%{value}%',
+          },
+        ];
 
-        this.traces.push({
-          x: data.x,
-          y: data.percentage_operations_processed,
-          type: 'bar',
-          name: 'Percentage of operations processed',
-        });
+        this.barChartData1 = [{ x: data.x, y: data.y, type: 'bar' }];
+        this.barChartData2 = [
+          { x: data.x, y: data.ticketed_matches_identified, type: 'bar' },
+        ];
+        // this.barChartData3 = [{ x: data.x, y: data.wanted_matches_identified, type: 'bar' }];
       });
     });
   }
- 
-// ================================================new chart===================================
-chart:any=['kjk', 'jkhj', 'kjkjh'] 
-selectedchart=null
-  barChartData = [  {    x: ['A', 'B', 'C', 'D'],
-    y: [10, 20, 30, 40],
-    type: 'bar'
-  }
-];
 
-  pieChartData1 = [  {    values: [99, 5, 20, 1],
-    labels: ['A', 'B', 'C', 'D'],
-    type: 'pie'
-  }
-];
-
-   pieChartData2 = [  {    values: [80, 40, 30, 4],
-    labels: ['E', 'F', 'G', 'H'],
-    type: 'pie'
-  }
-];
-
-layouts = {
-  title: 'My Dashboard'
-};
-
-// ==================================donut chart
-
-donut : any = [
-  {
-    values: [50, 30, 20],
-    labels: ['Apples', 'Oranges', 'Bananas'],
-    hole: 0.6,
-    type: 'pie',
-  },
-];
-layoutss: any = {
-  height: 400,
-  width: 500,
-};
-
-// ==============================
- outHover = [
-  {
-      x: ['A', 'B', 'C', 'D'],
-      y: [100000, 200, 1, 152],
-      type: 'bar',
-      text: [172000, 20, 0, 15],
-      textposition: 'auto'
-  }
-];
-
- layoutsss = {
-  xaxis: {title: 'Category'},
-  yaxis: {title: 'Value'},
-  title: 'My Bar Chart'
-};
-
-          
-
-
-// ===================================
-
+  pieChartLayout = {
+    title: 'Percentage Ticketed Matches',
+  };
+  pieChartLayout3 = {
+    title: '',
+  };
+  layoutsDonut = {
+    // height: 400,
+    // width: 500,
+  };
+  // ================================================new chart===================================
+  
+  barLayout1 = {
+    title: 'Vehicles Processed',
+  };
+  barLayout2 = {
+    title: 'Ticketed Matches Identified',
+  };
+  layouts = {
+    title: 'My Dashboard',
+  };
 
   
+piechart(){
+  console.log('charttype',this.chartType)
+  this.barData.forEach((data: any) => {
+
+    if(this.chartType==='pie'){
+    this.barChartData1 = [
+      { labels: data.x,
+        values: data.y, 
+       type: 'pie',
+       texttemplate: '%{value}%', }];
+
+    }
+    else{
+      this.barChartData1 = [{ x: data.x, y: data.y, type: 'bar' }];
+    }
+  });
+}
 
 
 
@@ -227,3 +257,11 @@ layoutss: any = {
 
 
 }
+
+  
+
+
+
+
+
+  

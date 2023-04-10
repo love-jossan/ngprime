@@ -1,153 +1,134 @@
-
-  <!-- <div >
+<!-- <div >
     <p-dropdown [options]="colors "  [(ngModel)]="selectedColor" 
     (onChange)="subClassData(id)"   placeholder="Sub Class"></p-dropdown>
    <div><plotly-plot [data]="traces" [layout]="layout"></plotly-plot></div>
 </div>
 
-
-
 <plotly-plot class="first" [data]="barChartData"    [layout]="layouts"></plotly-plot>
 <plotly-plot class="secound" [data]="pieChartData1" [layout]="layouts"></plotly-plot>
 <plotly-plot class="fourth" [data]="donut" [layout]="layoutss"></plotly-plot>
 <plotly-plot  [data]="outHover" [layout]="layoutsss"></plotly-plot> -->
- 
 
-<div class="container">
-<p-dropdown   [options]="cities" [(ngModel)]="selectedCity"  placeholder="select color"></p-dropdown>
-<p-dropdown class="ml-1" [options]="cities" [(ngModel)]="selectedCity"  placeholder="select color"></p-dropdown>
-
-  <div class="row">
-    <div class="col-md-4">
+<div class="container" >
+   <p-dropdown
+    [options]="colors"
+    (click)="subClassData( id)"
+    [(ngModel)]="selectedSubClass"
+    placeholder="Sub Class"
+    ></p-dropdown> 
+  <!-- <p-dropdown
+  [options]="chartOption"
+  (onChange)="changeType(id)"
+  [(ngModel)]="selectedChart"
+  placeholder="Select Chart"
+></p-dropdown> -->
+  <p-button
+    label="Auto Scale"
+    (click)="getReports()"
+    styleClass="p-button-raised p-button-text p-button-secondary"
+  ></p-button>
+  <div class="row"  >
+    <div class="col-md-6 col-lg-4 mb-3">
       <div class="card">
-        <div >
-          Sales
-        </div>
         <div class="card-body">
-          <h5 class="card-title">$2,500</h5>
-          <p class="card-text">Total sales this month</p>
+          <h5 class="card-title">{{ barChartD?.total_vehicle_processed }}</h5>
+          <p class="card-text">Total Vehicle Processed</p>
         </div>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6 col-lg-4 mb-3">
       <div class="card">
-        <!-- <div class="card-header"> -->
+        <div class="card-body">
+          <h5 class="card-title">
+            {{ barChartD?.total_ticketed_matches_identified }}
+          </h5>
+          <p class="card-text">Total Ticketed Matches Identified</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            {{ barChartD?.total_wanted_matches_identified }}
+          </h5>
+          <p class="card-text">Total Wanted Matches Identified</p>
+        </div>
+      </div>
+    </div>
+    <div class="row"  style="height: 700px; overflow-y: scroll;">
+    <div class="col-md-6 col-lg-4 mb-3">
+      <div class="card">
+        <div class="card-body">
+           <div class="p-field-radiobutton"> 
+             <p-radioButton name="pie1" value="pie" label="pie"  (click)="piechart()"[(ngModel)]="chartType" inputId="pie"></p-radioButton>
+            <!-- <label for="pie">pie</label> -->
+          </div>
+          <div class="p-field-radiobutton">
+            <p-radioButton name="bar1" value="bar" label="bar" (click)="piechart()" [(ngModel)]="chartType" inputId="bar"></p-radioButton>
+            <!-- <label for="bar">bar</label> -->
+          </div>
+          <div id="pie-chart">
+            <plotly-plot
+              class="first"
+              [data]="barChartData1"
+              [layout]="barLayout1"
+            ></plotly-plot>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4 mb-3">
+      <div class="card">
+        <div class="card-body">
           <div>
-          Users
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">1,500</h5>
-          <p class="card-text">Total number of users</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card">
-        <div >
-          Traffic
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">10,000</h5>
-          <p class="card-text">Total website traffic</p>
+            <plotly-plot
+              class="first"
+              [data]="barChartData2"
+              [layout]="barLayout2"
+            ></plotly-plot>
+          </div>
         </div>
       </div>
     </div>
-  
-
-
-<!-- ============================================== -->
-<!-- <div class="container"> -->
-  
-    <div class="col-md-4">
+    <div class="col-md-6 col-lg-4 mb-3" >
       <div class="card">
-        <div class="card-header">
-          Pie Chart
-        </div>
         <div class="card-body">
-          <div id="pie-chart"><plotly-plot class="first" [data]="barChartData"    [layout]="layouts"></plotly-plot></div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card">
-        <div class="card-header">
-          Bar Chart
-        </div>
-        <div class="card-body">
-          <div id="bar-chart"><plotly-plot class="secound" [data]="pieChartData1" [layout]="layouts"></plotly-plot></div>
+          <div >
+            <plotly-plot
+              class="secound"
+              [data]="pieChartData2"
+              [layout]="pieChartLayout"
+            ></plotly-plot>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-6 mb-3">
       <div class="card">
-        <div class="card-header">
-          Bar Chart
-        </div>
-        <div class="card-body">
-          <div id="bar-chart"><plotly-plot class="secound" [data]="pieChartData2" [layout]="layouts"></plotly-plot></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-<!-- </div> -->
-<!-- ========================================================= -->
-
-  <div class="row">
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-header">
-          Line Chart
-        </div>
         <div class="card-body">
           <div id="line-chart"></div>
-          <p class="card-text">Total sales over time</p>
-<plotly-plot class="first" [data]="barChartData"    [layout]="layouts"></plotly-plot>
+          <p class="card-text">Wanted Matches Identified</p>
+          <plotly-plot
+            [data]="pieChartData3"
+            [layout]="pieChartLayout3"
+          ></plotly-plot>
         </div>
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 mb-3">
       <div class="card">
-        <div class="card-header">
-          Area Chart
-        </div>
         <div class="card-body">
           <div id="area-chart"></div>
-          <p class="card-text">Website traffic by source</p>
-          <plotly-plot class="fourth" [data]="donut" [layout]="layoutss"></plotly-plot>
+          <p class="card-text">Percentage Operations Processed</p>
+        </div>
+        <div>
+          <plotly-plot [data]="donut" [layout]="layoutsDonut"></plotly-plot>
         </div>
       </div>
     </div>
   </div>
-  <div >
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Navbar</a>
-    </nav>
-    <p-dropdown   [options]="cities" [(ngModel)]="selectedCity"  placeholder="select color"></p-dropdown>
-<p-dropdown class="ml-1" [options]="cities" [(ngModel)]="selectedCity"  placeholder="select color"></p-dropdown>
-
-    <div class="row">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">
-            Pie Chart
-          </div>
-          <div class="card-body">
-            <div id="pie-chart"><plotly-plot class="first" [data]="barChartData"    [layout]="layouts"></plotly-plot></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">
-            Bar Chart
-          </div>
-          <div class="card-body">
-            <div id="bar-chart"><plotly-plot class="secound" [data]="pieChartData1" [layout]="layouts"></plotly-plot></div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
+<div>

@@ -18,9 +18,11 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ButtonModule } from 'primeng/button';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { CommonModule } from '@angular/common';
+import { SplitterModule } from 'primeng/splitter';
 import { PlotlyViaCDNModule } from 'angular-plotly.js';
 import * as PlotlyJS from 'plotly.js-dist-min';
 import { PlotlyModule } from 'angular-plotly.js';
+import {RadioButtonModule} from 'primeng/radiobutton';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { PlotlyViaWindowModule } from 'angular-plotly.js';
 PlotlyModule.plotlyjs = PlotlyJS;
@@ -47,6 +49,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     PlotlyViaCDNModule,
     PlotlyViaWindowModule,
     HttpClientModule,
+    SplitterModule,
+    RadioButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
