@@ -5,8 +5,9 @@ import { DialogComponent } from './dialog/dialog.component';
 
 const routes: Routes = [
   
-  { path: '', component:BarChartComponent },
- {path:'dialog/:id',component:DialogComponent}
+  { path: 'charts', component:BarChartComponent },
+  { path: '', redirectTo: 'charts', pathMatch: 'full' },
+ {path:'dialog',component:DialogComponent}
 ];
 
 @NgModule({

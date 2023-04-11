@@ -13,6 +13,8 @@ export class ChartService {
     return this.http.get(`${this.url}/get_sub_org/${id}`);
     
   }
-  
-
+  getAllData(){
+    return this.http.get(`${this.url}/api/org`)
+  }
+ 
 }
