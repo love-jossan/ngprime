@@ -321,7 +321,7 @@ piechart(){
     }
   });
 }
-
+subClasses:any
 getAllData(){
   this.chartService.getAllData().subscribe((res:any)=>{
    this.allData=res
@@ -329,6 +329,7 @@ getAllData(){
    const organizationNames = res.map((org :any)=> org.organistaion_name);
    this.newColor=organizationNames
    console.log(this.newColor)
+  this.newColor.pop();
 const vehicleProcess=res.map((org :any)=> org.vehicle_processed);
 const wantedMatches=res.map((org :any)=> org.wanted_matches_identified);
 const ticketMatches=res.map((org :any)=> org. ticketed_matches_identified);
@@ -375,89 +376,107 @@ const percentageTicket=res.map((org :any)=> org.percentage_ticketed_matches);
   
   }
 
-
-//   getId(id:any){
+  // ClassData(event:any){
+  //   console.log('id===========>',event)
+  //   if(event && event.value){
+  //     let selcteditem=this.allData?.find((item:any)=>item.organistaion_name==event.value)
+  //     console.log(selcteditem.id)
+  //   }
+  getId(event:any){
 // console.log('id',id)
 
 // console.log('selectedClass',this.selectedClass);
 // console.log('id',id)
-//   this.chartService.subClassData(id).subscribe((data: any) => {
-//     console.log('subclassdata', data);
-//     data.forEach((data: any) => {
-//       if (data.percentage_ticketed_matches.every((value: number) => value === 0)) {
-//         this.pieChartData2 = [
-//           {
-//             values: [100],
-//             labels: ['No data available'],
-//             type: 'pie',
-//             textinfo: 'none',
-//           },
-//         ];
-//       }
-//       else{
-//       this.pieChartData2 = [
-//         {
-//           values: data.percentage_ticketed_matches,
-//           labels: data.x,
-//           type: 'pie',
-//           texttemplate: '%{value}%',
-//         },
-//       ];
-//     }
+console.log('id===========>',event)
+    if(event && event.value){
+      let selcteditem=this.allData?.find((item:any)=>item.organistaion_name==event.value)
+      console.log(selcteditem.id)
+     let id=selcteditem.id
+     this.router.navigate(['/dialog', id]);
+  // this.chartService.subClassData(id).subscribe((data: any) => {
+  //   console.log('subclassdata', data);
+  //   data.forEach((data: any) => {
+  //     if (data.percentage_ticketed_matches.every((value: number) => value === 0)) {
+  //       this.pieChartData2 = [
+  //         {
+  //           values: [100],
+  //           labels: ['No data available'],
+  //           type: 'pie',
+  //           textinfo: 'none',
+  //         },
+  //       ];
+  //     }
+  //     else{
+  //     this.pieChartData2 = [
+  //       {
+  //         values: data.percentage_ticketed_matches,
+  //         labels: data.x,
+  //         type: 'pie',
+  //         texttemplate: '%{value}%',
+  //       },
+  //     ];
+  //   }
 
-//       if (data.wanted_matches_identified.every((value: number) => value === 0)) {
-//         this.pieChartData3 = [
-//           {
-//             values: [100],
-//             labels: ['No data available '],
-//             type: 'pie',
-//             textinfo: 'none',
-//           },
-//         ];
-//       }
-//       else{
-//       this.pieChartData3 = [
-//         {
-//           values: data.wanted_matches_identified,
-//           labels: data.x,
-//           type: 'pie',
-//           texttemplate: '%{value}%',
-//         },
-//       ];
-//     }
+  //     if (data.wanted_matches_identified.every((value: number) => value === 0)) {
+  //       this.pieChartData3 = [
+  //         {
+  //           values: [100],
+  //           labels: ['No data available '],
+  //           type: 'pie',
+  //           textinfo: 'none',
+  //         },
+  //       ];
+  //     }
+  //     else{
+  //     this.pieChartData3 = [
+  //       {
+  //         values: data.wanted_matches_identified,
+  //         labels: data.x,
+  //         type: 'pie',
+  //         texttemplate: '%{value}%',
+  //       },
+  //     ];
+  //   }
 
-//       if (data.percentage_operations_processed.every((value: number) => value === 0)) {
-//         this.donut = [
-//           {
-//             values: [100],
-//             labels: ['No data available'],
-//             type: 'pie',
-//             textinfo: 'none',
-//           },
-//         ];
-//       }
-//       else{
-//       this.donut = [
-//         {
-//           values: data.percentage_operations_processed,
-//           labels: data.x,
-//           hole: 0.6,
-//           type: 'pie',
-//           texttemplate: '%{value}%',
-//         },
-//       ];
-//     }
-//       this.barChartData1 = [{ x: data.x, y: data.y, type: 'bar' }];
-//       this.barChartData2 = [
-//         { x: data.x, y: data.ticketed_matches_identified, type: 'bar' },
-//       ];
-//     });
-//   });
-// }
-
-ClassData(id:any){
-  console.log('id===========>',id)
+  //     if (data.percentage_operations_processed.every((value: number) => value === 0)) {
+  //       this.donut = [
+  //         {
+  //           values: [100],
+  //           labels: ['No data available'],
+  //           type: 'pie',
+  //           textinfo: 'none',
+  //         },
+  //       ];
+  //     }
+  //     else{
+  //     this.donut = [
+  //       {
+  //         values: data.percentage_operations_processed,
+  //         labels: data.x,
+  //         hole: 0.6,
+  //         type: 'pie',
+  //         texttemplate: '%{value}%',
+  //       },
+  //     ];
+  //   }
+  //     this.barChartData1 = [{ x: data.x, y: data.y, type: 'bar' }];
+  //     this.barChartData2 = [
+  //       { x: data.x, y: data.ticketed_matches_identified, type: 'bar' },
+  //     ];
+  //   });
+  // });
 }
+  }
+ClassData(event:any){
+  console.log('id===========>',event)
+  if(event && event.value){
+    let selcteditem=this.allData?.find((item:any)=>item.organistaion_name==event.value)
+    console.log(selcteditem.id)
+  }
+
+ 
+}
+
 
 
 

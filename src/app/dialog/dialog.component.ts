@@ -61,36 +61,73 @@ export class DialogComponent {
     private router: Router,
     private el: ElementRef
   ) {
-    this.id1 = this.route.snapshot.params['id1'];
-    console.log('id1', this.id1);
+    this.id1 = this.route.snapshot.paramMap.get('id');
+    console.log('id1',this.id1); 
   }
   // id:any
   ngOnInit(): void {
     this.getReports();
     this.subData();
-    this.subClassData(this.id);
+    // this.subClassData(this.id);
     this.el.nativeElement.style.overflowY = 'scroll';
     this.el.nativeElement.style.maxHeight = this.maxHeight || '700px';
   }
   
   percentage: any;
   subData() {
-    let id = 1;
-    this.chartService.subClassData(id).subscribe((res: any) => {
+    this.subClassData(this.id)
+    this.chartService.subClassData(this.id1).subscribe((res: any) => {
       console.log('sub blue data', res);
       let data = res;
       this.newsData=data
       console.log('newsData',this.newsData)
       this.newsData.forEach((data: any) => {
+        
+        // this.pieChartData2 = [
+        //   {
+        //     y: data.percentage_ticketed_matches,
+        //     x: data.x,
+        //     type: 'bar',
+        //   },
+        // ];
+
+        if (
+          data.percentage_ticketed_matches.every(
+            (value: number) => value === 0
+          )
+        ) {
+          this.pieChartData2 = [
+            {
+              y: [100],
+              x: ['No data available'],
+              type: 'bar',
+              // textinfo: 'none',
+            },
+          ];}
+          else{
         this.pieChartData2 = [
           {
             y: data.percentage_ticketed_matches,
             x: data.x,
             type: 'bar',
             // textinfo: 'percent',
-            // texttemplate: '%{value}%',
+             texttemplate: '%{value}%',
           },
-        ];
+        ];}
+        if (
+          data.wanted_matches_identified.every(
+            (value: number) => value === 0
+          )
+        ) {
+          this.pieChartData3 = [
+            {
+              y: [100],
+              x: ['No data available'],
+              type: 'bar',
+              // textinfo: 'none',
+            },
+          ];
+        } else {
         this.pieChartData3 = [
           {
             y: data.wanted_matches_identified,
@@ -98,7 +135,12 @@ export class DialogComponent {
             type: 'bar',
             // textinfo: 'percent',
           },
-        ];
+        ];}
+        if (
+          data.percentage_operations_processed.every(
+            (value: number) => value === 0
+          )
+        )  {
         this.donut = [
           {
             y: [100],
@@ -106,22 +148,24 @@ export class DialogComponent {
             type: 'bar',
             textinfo: 'none',
           },
-        ];
-
+        ];}
+else{
         this.donut = [
           {
             y: data.percentage_operations_processed,
             x: data.x,
             type: 'bar',
           },
-        ];
+        ];}
         this.barChartData1 = [{ x: data.x, y: data.y, type: 'bar' }];
         this.barChartData2 = [
           { x: data.x, y: data.ticketed_matches_identified, type: 'bar' },
         ];
+
       });
     });
   }
+
   subClassData(id: any) {
     console.log(this.selectedSubClass);
     let index = this.colors.indexOf(this.selectedSubClass);
@@ -141,7 +185,7 @@ export class DialogComponent {
               {
                 y: [100],
                 x: ['No data available'],
-                type: 'pie',
+                type: 'bar',
                 textinfo: 'none',
               },
             ];
@@ -152,7 +196,7 @@ export class DialogComponent {
                 x: data.x,
                 type: 'bar',
                 // textinfo: 'percent',
-                // texttemplate: '%{value}%',
+                 texttemplate: '%{value}%',
               },
             ];
           }
@@ -244,14 +288,14 @@ export class DialogComponent {
 
   piechart5() {
     console.log('charttype', this.chartType);
-    this.newsData.forEach((data: any) => {
+    this.pieChartData.forEach((data: any) => {
       if (this.chartType === 'pie4') {
         this.donut = [
           {
             labels: data.x,
             values: data.percentage_operations_processed,
             type: 'pie',
-            texttemplate: '%{value}%',
+            // texttemplate: '%{value}%',
           },
         ];
       } else {
@@ -264,14 +308,14 @@ export class DialogComponent {
 
   piechart4() {
     console.log('charttype', this.chartType);
-    this.newsData.forEach((data: any) => {
+    this.pieChartData.forEach((data: any) => {
       if (this.chartType === 'pie3') {
         this.pieChartData3 = [
           {
             labels: data.x,
             values: data.wanted_matches_identified,
             type: 'pie',
-            texttemplate: '%{value}%',
+            // texttemplate: '%{value}%',
           },
         ];
       } else {
@@ -283,14 +327,15 @@ export class DialogComponent {
   }
   piechart3() {
     console.log('charttype', this.chartType);
-    this.newsData.forEach((data: any) => {
+    this.pieChartData.forEach((data: any) => {
       if (this.chartType === 'pie2') {
         this.pieChartData2 = [
           {
             labels: data.x,
             values: data.percentage_ticketed_matches,
             type: 'pie',
-            texttemplate: '%{value}%',
+            // texttemplate: '%{value}%',
+              textinfo: 'none',
           },
         ];
       } else {
@@ -302,14 +347,14 @@ export class DialogComponent {
   }
   piechart2() {
     console.log('charttype', this.chartType);
-    this.newsData.forEach((data: any) => {
+    this.pieChartData.forEach((data: any) => {
       if (this.chartType === 'pie1') {
         this.barChartData2 = [
           {
             labels: data.x,
             values: data.ticketed_matches_identified,
             type: 'pie',
-            texttemplate: '%{value}%',
+            // texttemplate: '%{value}%',
           },
         ];
       } else {
@@ -320,21 +365,30 @@ export class DialogComponent {
     });
   }
 
-  piechart() {
-    console.log('charttype', this.chartType);
-    this.newsData.forEach((data: any) => {
-      if (this.chartType === 'pie') {
-        this.barChartData1 = [
-          {
-            labels: data.x,
-            values: data.y,
-            type: 'pie',
-            texttemplate: '%{value}%',
-          },
-        ];
-      } else {
+  piechart(){
+    console.log('charttype',this.chartType)
+    this.pieChartData.forEach((data: any) => {
+      if(this.chartType==='pie'){
+      this.barChartData1 = [
+        { labels: data.x,
+          values: data.y, 
+         type: 'pie',
+        //  texttemplate: '%{value}%',
+         }];
+      }
+      else{
         this.barChartData1 = [{ x: data.x, y: data.y, type: 'bar' }];
       }
     });
-  }
+    
+    
+}
+
+
+
+
+
+
+
+
 }

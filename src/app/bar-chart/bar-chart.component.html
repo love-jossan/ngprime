@@ -9,7 +9,7 @@
 <plotly-plot class="fourth" [data]="donut" [layout]="layoutss"></plotly-plot>
 <plotly-plot  [data]="outHover" [layout]="layoutsss"></plotly-plot> -->
 
-<div class="container" >
+<!-- <div class="container" >
    <p-dropdown
     [options]="colors"
     (onChange)="subClassData( id)"
@@ -146,15 +146,16 @@
     </div>
   </div>
   </div>
-</div>
+</div> -->
 
-<div></div>
+
 <!-- ======================================= new -->
- <!-- <div class="container" *ngFor="let item of allData" >
+
+  <div class="container"  >
   
    <p-dropdown
    [options]="newColor"
-   (onChange)="getId(item.id)"
+   (onChange)="getId($event)"
    [(ngModel)]="selectedClass"
    placeholder="Sub Class"
 ></p-dropdown>  
@@ -188,17 +189,17 @@
        </div>
      </div>
    </div>
-   <div class="row"  style="height: 700px; overflow-y: scroll;">
+   <div class="row"  style="height: 450px; overflow-y: scroll;">
    <div class="col-md-6 col-lg-4 mb-3">
      <div class="card">
        <div class="card-body">
-          <div class="p-field-radiobutton"> 
-            <p-radioButton name="pie1" value="pie" label="pie"  (click)="piechart()"[(ngModel)]="chartType" inputId="pie"></p-radioButton>
-         </div>
-         <div class="p-field-radiobutton">
-           <p-radioButton name="bar1" value="bar" label="bar" (click)="piechart()" [(ngModel)]="chartType" inputId="bar"></p-radioButton>
-         </div> -->
-         <!-- <div id="pie-chart">
+        <div class="p-field-radiobutton"> 
+          <p-radioButton name="pie1" value="pie" label="pie"  (click)="piechart()"[(ngModel)]="chartType" inputId="pie"></p-radioButton>
+       </div>
+       <div class="p-field-radiobutton">
+         <p-radioButton name="bar" value="bar" label="bar" (click)="piechart()" [(ngModel)]="chartType" inputId="bar"></p-radioButton>
+       </div>
+          <div id="pie-chart">
            <plotly-plot
              class="first"
              [data]="barChartData1"
@@ -211,6 +212,12 @@
    <div class="col-md-6 col-lg-4 mb-3">
      <div class="card">
        <div class="card-body">
+        <div class="p-field-radiobutton"> 
+          <p-radioButton name="pie1" value="pie1" label="pie"  (click)="piechart2()"[(ngModel)]="chartType" inputId="pie"></p-radioButton>
+       </div>
+       <div class="p-field-radiobutton">
+         <p-radioButton name="bar1" value="bar1" label="bar" (click)="piechart2()" [(ngModel)]="chartType" inputId="bar"></p-radioButton>
+       </div>
          <div>
            <plotly-plot
              class="first"
@@ -221,9 +228,16 @@
        </div>
      </div>
    </div>
+  
    <div class="col-md-6 col-lg-4 mb-3" >
      <div class="card">
        <div class="card-body">
+        <div class="p-field-radiobutton"> 
+          <p-radioButton name="pie1" value="pie2" label="pie"  (click)="piechart3()"[(ngModel)]="chartType" inputId="pie"></p-radioButton>
+       </div>
+       <div class="p-field-radiobutton">
+         <p-radioButton name="bar1" value="bar2" label="bar" (click)="piechart3()" [(ngModel)]="chartType" inputId="bar"></p-radioButton>
+       </div>
          <div >
            <plotly-plot
              class="secound"
@@ -240,6 +254,12 @@
        <div class="card-body">
          <div id="line-chart"></div>
          <p class="card-text">Wanted Matches Identified</p>
+         <div class="p-field-radiobutton"> 
+          <p-radioButton name="pie1" value="pie3" label="pie"  (click)="piechart4()"[(ngModel)]="chartType" inputId="pie"></p-radioButton>
+       </div>
+       <div class="p-field-radiobutton">
+         <p-radioButton name="bar1" value="bar3" label="bar" (click)="piechart4()" [(ngModel)]="chartType" inputId="bar"></p-radioButton>
+       </div>
          <plotly-plot
            [data]="pieChartData3"
            [layout]="pieChartLayout3"
@@ -252,6 +272,12 @@
        <div class="card-body">
          <div id="area-chart"></div>
          <p class="card-text">Percentage Operations Processed</p>
+         <div class="p-field-radiobutton"> 
+          <p-radioButton name="pie1" value="pie4" label="pie"  (click)="piechart5()"[(ngModel)]="chartType" inputId="pie"></p-radioButton>
+       </div>
+       <div class="p-field-radiobutton">
+         <p-radioButton name="bar1" value="bar4" label="bar" (click)="piechart()" [(ngModel)]="chartType" inputId="bar"></p-radioButton>
+       </div>
        </div>
        <div>
          <plotly-plot [data]="donut" [layout]="layoutsDonut"></plotly-plot>
@@ -260,12 +286,12 @@
    </div>
  </div>
  </div>
-</div>  --> 
-<div>
-<p-dropdown
-    [options]="class"
-    (click)="ClassData( id)"
+</div>  
+
+  <!-- <p-dropdown
+    [options]="newColor"
+    (onChange)="ClassData($event)"
     [(ngModel)]="selectedSubClass"
     placeholder="Sub Class"
-   ></p-dropdown>
-   </div>
+   ></p-dropdown>  -->
+

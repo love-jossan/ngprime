@@ -40,12 +40,12 @@
        </div>
      </div>
    </div>
-   <div class="row"  style="height: 700px; overflow-y: scroll;">
+   <div class="row"  style="height: 450px; overflow-y: scroll;">
    <div class="col-md-6 col-lg-4 mb-3">
      <div class="card">
        <div class="card-body">
           <div class="p-field-radiobutton"> 
-            <p-radioButton name="pie1" value="pie" label="pie"  (click)="piechart()"[(ngModel)]="chartType" inputId="pie"></p-radioButton>
+            <p-radioButton name="pie1" value="pie"  label="pie"   (click)="piechart()"[(ngModel)]="chartType" inputId="pie"></p-radioButton>
          </div>
          <div class="p-field-radiobutton">
            <p-radioButton name="bar1" value="bar" label="bar" (click)="piechart()" [(ngModel)]="chartType" inputId="bar"></p-radioButton>
@@ -64,10 +64,10 @@
      <div class="card">
        <div class="card-body">
         <div class="p-field-radiobutton"> 
-          <p-radioButton name="pie1" value="pie1" label="pie"  (click)="piechart2()"[(ngModel)]="chartType" inputId="pie"></p-radioButton>
+          <p-radioButton name="pie1" value="pie1" label="pie"   (click)="piechart2()"[(ngModel)]="chartType" inputId="pie"></p-radioButton>
        </div>
        <div class="p-field-radiobutton">
-         <p-radioButton name="bar1" value="bar1" label="bar" (click)="piechart2()" [(ngModel)]="chartType" inputId="bar"></p-radioButton>
+         <p-radioButton name="bar1" value="bar1" label="bar"   (click)="piechart2()" [(ngModel)]="chartType" inputId="bar"></p-radioButton>
        </div>
          <div>
            <plotly-plot
@@ -83,10 +83,10 @@
      <div class="card">
        <div class="card-body">
         <div class="p-field-radiobutton"> 
-          <p-radioButton name="pie1" value="pie2" label="pie"  (click)="piechart3()"[(ngModel)]="chartType" inputId="pie"></p-radioButton>
+          <p-radioButton name="pie1" value="pie2" label="pie"    (click)="piechart3()"[(ngModel)]="chartType" inputId="pie"></p-radioButton>
        </div>
        <div class="p-field-radiobutton">
-         <p-radioButton name="bar1" value="bar2" label="bar" (click)="piechart3()" [(ngModel)]="chartType" inputId="bar"></p-radioButton>
+         <p-radioButton name="bar1" value="bar2" label="bar"   (click)="piechart3()" [(ngModel)]="chartType" inputId="bar"></p-radioButton>
        </div>
          <div >
            <plotly-plot
@@ -105,10 +105,10 @@
          <div id="line-chart"></div>
          <p class="card-text">Wanted Matches Identified</p>
          <div class="p-field-radiobutton"> 
-          <p-radioButton name="pie1" value="pie3" label="pie"  (click)="piechart4()"[(ngModel)]="chartType" inputId="pie"></p-radioButton>
+          <p-radioButton name="pie1" value="pie3" label="pie"    (click)="piechart4()"[(ngModel)]="chartType" inputId="pie"></p-radioButton>
        </div>
        <div class="p-field-radiobutton">
-         <p-radioButton name="bar1" value="bar3" label="bar" (click)="piechart4()" [(ngModel)]="chartType" inputId="bar"></p-radioButton>
+         <p-radioButton name="bar1" value="bar3" label="bar"  (click)="piechart4()" [(ngModel)]="chartType" inputId="bar"></p-radioButton>
        </div>
          <plotly-plot
            [data]="pieChartData3"
@@ -126,7 +126,7 @@
           <p-radioButton name="pie1" value="pie4" label="pie"  (click)="piechart5()"[(ngModel)]="chartType" inputId="pie"></p-radioButton>
        </div>
        <div class="p-field-radiobutton">
-         <p-radioButton name="bar1" value="bar4" label="bar" (click)="piechart5()" [(ngModel)]="chartType" inputId="bar"></p-radioButton>
+         <p-radioButton name="bar1" value="bar4" label="bar"  (click)="piechart5()" [(ngModel)]="chartType" inputId="bar"></p-radioButton>
        </div>
        </div>
        <div>
