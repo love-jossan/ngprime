@@ -42,17 +42,16 @@ export class BarChartComponent implements OnInit {
   id: any;
 
   // Define the layout options
-  layout = {
-    title: 'Column Chart',
-    xaxis: {
-      title: 'Categories',
-    },
-    yaxis: {
-      title: 'Values',
-    },
-  };
+  // layout = {
+  //   title: 'Column Chart',
+  //   xaxis: {
+  //     title: 'Categories',
+  //   },
+  //   yaxis: {
+  //     title: 'Values',
+  //   },
+  // };
   id1: any;
-  traces: any[] = [];
   barChartD: any;
   @Input() maxHeight: any;
   constructor(
@@ -109,7 +108,7 @@ export class BarChartComponent implements OnInit {
             labels: this.organizationNames,
             values: this.percentageOperation,
             type: 'pie',
-            texttemplate: '%{value}%',
+            // texttemplate: '%{value}%',
           },
         ];
       } else {
@@ -133,7 +132,7 @@ export class BarChartComponent implements OnInit {
             labels:this.organizationNames,
             values: this.wantedMatches,
             type: 'pie',
-            texttemplate: '%{value}%',
+            // texttemplate: '%{value}%',
           },
         ];
       } else {
@@ -156,7 +155,7 @@ export class BarChartComponent implements OnInit {
             labels: this.organizationNames,
             values: this.percentageTicket,
             type: 'pie',
-            texttemplate: '%{value}%',
+            // texttemplate: '%{value}%',
           },
         ];
       } else {
@@ -179,7 +178,7 @@ export class BarChartComponent implements OnInit {
             labels: this.organizationNames,
             values: this.ticketMatches,
             type: 'pie',
-            texttemplate: '%{value}%',
+            // texttemplate: '%{value}%',
           },
         ];
       } else {
@@ -203,7 +202,7 @@ export class BarChartComponent implements OnInit {
             labels: this.organizationNames,
             values: this.vehicleProcess,
             type: 'pie',
-            texttemplate: '%{value}%',
+            // texttemplate: '%{value}%',
 
           },
         ];
@@ -308,6 +307,80 @@ export class BarChartComponent implements OnInit {
     }
   }
 
+//   subClassData:any
+//   subCategoryOption:any
+//   subClassData1(event:any){
+   
+//     console.log('id===========>',event)
+//         if(event && event.value){
+//           let selcteditem=this.allData?.find((item:any)=>item.organistaion_name==event.value)
+//           console.log(selcteditem.id)
+//          let id=selcteditem.id
+//       this.chartService.subClassData(id).subscribe((data: any) => {
+//         this.subClassData=data
+//          console.log('subclassdata', this.subClassData);
+//         this.subCategoryOption= data.map((org: any) => org.sub_organistaion_category);
+//         this.subCategoryOption.pop();
+       
+//          this.organizationNames = data.map((org: any) => org.sub_organistaion_category);
+//     this.vehicleProcess = data.map((org: any) => org.vehicle_processed);
+//     this.wantedMatches = data.map(
+//      (org: any) => org.wanted_matches_identified
+//    );
+//     this.ticketMatches = data.map(
+//      (org: any) => org.ticketed_matches_identified
+//    );
+//     this.percentageOperation = data.map(
+//      (org: any) => org.percentage_operations_processed
+//    );
+//     this.percentageTicket = data.map(
+//      (org: any) => org.percentage_ticketed_matches
+//    );
+   
+//    this.pieChartData2 = [
+//      {
+//        y: this.percentageTicket,
+//        x: this.organizationNames,
+//        type: 'bar',
+//        text: this.percentageTicket,
+//        textposition: 'auto'
+//      },
+//    ];
+                     
+//    this.pieChartData3 = [
+//     {
+//       y: this.wantedMatches,
+//       x: this.organizationNames,
+//       type: 'bar',
+//       text: this.wantedMatches,
+//        textposition: 'auto'
+
+//     },
+//   ];
+//   this.donut = [
+//     {
+//       y: this.percentageOperation,
+//       x: this.organizationNames,
+//       type: 'bar',
+//       text: this.percentageOperation,
+//       textposition: 'auto'
+     
+//     },
+//   ];
+
+//   this.barChartData1 = [
+//     { x: this.organizationNames, y: this.vehicleProcess, type: 'bar',     text: this.vehicleProcess,
+//      },
+//   ];
+//   this.barChartData2 = [
+//     { x: this.organizationNames, y: this.ticketMatches, type: 'bar' , text: this.ticketMatches,
+//     },
+//   ];             
+                     
+       
+//       });
+//     }
+// }
   
   
   
