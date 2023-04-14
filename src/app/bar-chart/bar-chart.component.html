@@ -159,12 +159,15 @@
    [(ngModel)]="selectedClass"
    placeholder="Sub Class"
 ></p-dropdown>  
+<p-button
+   label="Auto Scale" (click)="autoScale()"
+   styleClass="p-button-raised p-button-text p-button-secondary"
+ ></p-button>
  <div class="row"  >
    <div class="col-md-6 col-lg-4 mb-3">
      <div class="card">
        <div class="card-body">
-         <h5 class="card-title">{{allData[4]?.total_vehicle_record.total_vehicle_processed
-        }}</h5>
+         <h5 class="card-title">{{ totalRecordData?.total_vehicle_processed }}</h5>
          <p class="card-text">Total Vehicle Processed</p>
        </div>
      </div>
@@ -173,7 +176,7 @@
      <div class="card">
        <div class="card-body">
          <h5 class="card-title">
-           {{allData[4]?.total_vehicle_record.total_ticketed_matches_identified}}
+          {{ totalRecordData?.total_ticketed_matches_identified }}
          </h5>
          <p class="card-text">Total Ticketed Matches Identified</p>
        </div>
@@ -183,7 +186,7 @@
      <div class="card">
        <div class="card-body">
          <h5 class="card-title">
-          {{allData[4]?.total_vehicle_record.total_wanted_matches_identified}}
+          {{ totalRecordData?.total_wanted_matches_identified }}
          </h5>
          <p class="card-text">Total Wanted Matches Identified</p>
        </div>
@@ -276,7 +279,7 @@
           <p-radioButton name="pie1" value="pie4" label="pie"  (click)="piechart5()"[(ngModel)]="chartType" inputId="pie"></p-radioButton>
        </div>
        <div class="p-field-radiobutton">
-         <p-radioButton name="bar1" value="bar4" label="bar" (click)="piechart()" [(ngModel)]="chartType" inputId="bar"></p-radioButton>
+         <p-radioButton name="bar1" value="bar4" label="bar" (click)="piechart5()" [(ngModel)]="chartType" inputId="bar"></p-radioButton>
        </div>
        </div>
        <div>
@@ -287,11 +290,9 @@
  </div>
  </div>
 </div>  
-
   <!-- <p-dropdown
     [options]="newColor"
     (onChange)="ClassData($event)"
     [(ngModel)]="selectedSubClass"
     placeholder="Sub Class"
    ></p-dropdown>  -->
-
