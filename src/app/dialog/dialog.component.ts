@@ -173,6 +173,22 @@ export class DialogComponent {
   piechart5() {
     console.log('charttype', this.chartType);
     // this.subClassData.forEach((data: any) => {
+       if (
+          this.percentageOperation.every(
+            (value: number) => value === 0
+          )
+        ) 
+       
+
+        
+          this.donut = [
+            {
+              y: [100],
+              x: ['No data available'],
+              type: 'bar',
+              // textinfo: 'none',
+            },
+          ];
       if (this.chartType === 'pie4') {
         this.donut = [
           {

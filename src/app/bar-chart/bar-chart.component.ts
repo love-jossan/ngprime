@@ -21,6 +21,7 @@ export class BarChartComponent implements OnInit {
   public data: Plotly.Data[] | undefined;
   newData: any;
   colors: any = [];
+  pieChartDataT:any
   newColor: any;
   selectedClass = '';
   chartType: any;
@@ -40,17 +41,6 @@ export class BarChartComponent implements OnInit {
   selectedChartData: any;
   subClass: any;
   id: any;
-
-  // Define the layout options
-  // layout = {
-  //   title: 'Column Chart',
-  //   xaxis: {
-  //     title: 'Categories',
-  //   },
-  //   yaxis: {
-  //     title: 'Values',
-  //   },
-  // };
   id1: any;
   barChartD: any;
   @Input() maxHeight: any;
@@ -100,6 +90,7 @@ export class BarChartComponent implements OnInit {
   };
 
   piechart5() {
+   
     // console.log('charttype', this.chartType);
     // this.allData.forEach((data: any) => {
       if (this.chartType === 'pie4') {
@@ -112,7 +103,7 @@ export class BarChartComponent implements OnInit {
           },
         ];
       } else {
-        this.pieChartData3 = [
+        this.donut = [
           { x: this.organizationNames, 
             y: this.percentageOperation, 
             type: 'bar' ,
@@ -227,8 +218,6 @@ export class BarChartComponent implements OnInit {
   ticketMatches:any
   percentageOperation:any
   percentageTicket:any
-
-
   getAllData() {
     this.chartService.getAllData().subscribe((res: any) => {
       this.allData = res;
@@ -259,7 +248,6 @@ export class BarChartComponent implements OnInit {
           // text: this.percentageTicket,
           texttemplate: '%{y}',
           textposition: 'auto'
-         
         },
       ];
       this.pieChartData3 = [
@@ -283,7 +271,7 @@ export class BarChartComponent implements OnInit {
           // texttemplate: '%{value}%',
         },
       ];
-
+    
       this.barChartData1 = [
         { x: this.organizationNames, y: this.vehicleProcess, type: 'bar',     text: this.vehicleProcess,
          },
@@ -295,95 +283,175 @@ export class BarChartComponent implements OnInit {
     });
   }
 
-  getId(event: any) {
-    console.log('id===========>', event);
-    if (event && event.value) {
-      let selcteditem = this.allData?.find(
-        (item: any) => item.organistaion_name == event.value
-      );
-      console.log(selcteditem.id);
-      let id = selcteditem.id;
-      this.router.navigate(['/dialog', id]);
-    }
-  }
-
-//   subClassData:any
-//   subCategoryOption:any
-//   subClassData1(event:any){
+subClassData:any
+subCategoryOption:any
+getId(event:any){
    
-//     console.log('id===========>',event)
-//         if(event && event.value){
-//           let selcteditem=this.allData?.find((item:any)=>item.organistaion_name==event.value)
-//           console.log(selcteditem.id)
-//          let id=selcteditem.id
-//       this.chartService.subClassData(id).subscribe((data: any) => {
-//         this.subClassData=data
-//          console.log('subclassdata', this.subClassData);
-//         this.subCategoryOption= data.map((org: any) => org.sub_organistaion_category);
-//         this.subCategoryOption.pop();
-       
-//          this.organizationNames = data.map((org: any) => org.sub_organistaion_category);
-//     this.vehicleProcess = data.map((org: any) => org.vehicle_processed);
-//     this.wantedMatches = data.map(
-//      (org: any) => org.wanted_matches_identified
-//    );
-//     this.ticketMatches = data.map(
-//      (org: any) => org.ticketed_matches_identified
-//    );
-//     this.percentageOperation = data.map(
-//      (org: any) => org.percentage_operations_processed
-//    );
-//     this.percentageTicket = data.map(
-//      (org: any) => org.percentage_ticketed_matches
-//    );
-   
-//    this.pieChartData2 = [
-//      {
-//        y: this.percentageTicket,
-//        x: this.organizationNames,
-//        type: 'bar',
-//        text: this.percentageTicket,
-//        textposition: 'auto'
-//      },
-//    ];
-                     
-//    this.pieChartData3 = [
-//     {
-//       y: this.wantedMatches,
-//       x: this.organizationNames,
-//       type: 'bar',
-//       text: this.wantedMatches,
-//        textposition: 'auto'
-
-//     },
-//   ];
-//   this.donut = [
-//     {
-//       y: this.percentageOperation,
-//       x: this.organizationNames,
-//       type: 'bar',
-//       text: this.percentageOperation,
-//       textposition: 'auto'
+  console.log('id===========>',event)
+      if(event && event.value){
+        let selcteditem=this.allData?.find((item:any)=>item.organistaion_name==event.value)
+        console.log(selcteditem.id)
+       let id=selcteditem.id
+    this.chartService.subClassData(id).subscribe((data: any) => {
+      this.subClassData=data
+       console.log('subclassdata', this.subClassData);
+      this.subCategoryOption= data.map((org: any) => org.sub_organistaion_category);
+      this.subCategoryOption.pop();
      
-//     },
-//   ];
+       this.organizationNames = data.map((org: any) => org.sub_organistaion_category);
+  this.vehicleProcess = data.map((org: any) => org.vehicle_processed);
+  this.wantedMatches = data.map(
+   (org: any) => org.wanted_matches_identified
+ );
+  this.ticketMatches = data.map(
+   (org: any) => org.ticketed_matches_identified
+ );
+  this.percentageOperation = data.map(
+   (org: any) => org.percentage_operations_processed
+ );
+  this.percentageTicket = data.map(
+   (org: any) => org.percentage_ticketed_matches
+ );
+ 
+ this.pieChartData2 = [
+   {
+     y: this.percentageTicket,
+     x: this.organizationNames,
+     type: 'bar',
+     text: this.percentageTicket,
+     textposition: 'auto'
+   },
+ ];   
+ this.pieChartData3 = [
+  {
+    y: this.wantedMatches,
+    x: this.organizationNames,
+    type: 'bar',
+    text: this.wantedMatches,
+     textposition: 'auto'
 
-//   this.barChartData1 = [
-//     { x: this.organizationNames, y: this.vehicleProcess, type: 'bar',     text: this.vehicleProcess,
-//      },
-//   ];
-//   this.barChartData2 = [
-//     { x: this.organizationNames, y: this.ticketMatches, type: 'bar' , text: this.ticketMatches,
-//     },
-//   ];             
-                     
-       
-//       });
-//     }
-// }
+  },
+];
+if (this.wantedMatches.reduce((a:any, b:any) => a + b, 0) === 0) {
+  this.donut = [{
+    type: 'scatter',
+    mode: 'text',
+    x: [0.5],
+    y: [0.5],
+    text: 'No matches identified',
+    textfont: {
+      color: '#555',
+      size: 20
+    },
+    showlegend: false,
+    hoverinfo: 'none'
+  }];
+} else {
+this.donut = [
+  {
+    y: this.percentageOperation,
+    x: this.organizationNames,
+    // hole: 0.6,
+    type: 'bar',
+    text: this.percentageOperation,
+    textposition: 'auto'
+    // texttemplate: '%{value}%',
+  },
+];
+}
+this.barChartData1 = [
+  { x: this.organizationNames, y: this.vehicleProcess, type: 'bar',     text: this.vehicleProcess,
+   },
+];
+this.barChartData2 = [
+  { x: this.organizationNames, y: this.ticketMatches, type: 'bar' , text: this.ticketMatches,
+  },
+];             
+                   
+      // });
+    });
+  }
+}
   
+
+subCategoryData:any
+selectedCategoryClass=null
+
+subClassData2(event:any){
+
+  console.log('id===========>',event)
+  if(event && event.value){
+    let selcteditem=this.subClassData?.find((item:any)=>item.sub_organistaion_category==event.value)
+    console.log(selcteditem.id)
+   let id2=selcteditem.id
+this.chartService.getSubCategory(id2).subscribe((data:any)=>{
+console.log('new id data',data)
+this.subCategoryData=data
+ this.organizationNames = data.map((org: any) => org.org_sub_cat_name);
+    this.vehicleProcess = data.map((org: any) => org.vehicle_processed);
+    this.wantedMatches = data.map(
+     (org: any) => org.wanted_matches_identified
+   );
+    this.ticketMatches = data.map(
+     (org: any) => org.ticketed_matches_identified
+   );
+    this.percentageOperation = data.map(
+     (org: any) => org.percentage_operations_processed
+   );
+    this.percentageTicket = data.map(
+     (org: any) => org.percentage_ticketed_matches
+   );
+
   
-  
+this.pieChartData2 = [
+ {
+   y: this.percentageTicket,
+   x: this.organizationNames,
+   type: 'bar',
+   text:  this.percentageTicket,
+   textposition: 'auto'
+ },
+];
+      
+this.pieChartData3 = [
+{
+  y:  this.wantedMatches,
+  x: this.organizationNames,
+  type: 'bar',
+  text:  this.wantedMatches,
+   textposition: 'auto'
+
+},
+];
+
+this.donut = [
+{
+  y:  this.percentageOperation,
+  x: this.organizationNames,
+  // hole: 0.6,
+  type: 'bar',
+  text:  this.percentageOperation,
+  textposition: 'auto'
+  // texttemplate: '%{value}%',
+},
+];
+
+this.barChartData1 = [
+{ x: this.organizationNames, y:this.vehicleProcess, type: 'bar', text:  this.vehicleProcess,    
+ },
+];
+this.barChartData2 = [
+{ x:this.organizationNames, y:  this.ticketMatches, type: 'bar' , text:  this.ticketMatches,
+},
+];      
+
+
+
+
+})
+
+}
+}
 }
 
 
