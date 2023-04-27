@@ -23,8 +23,18 @@ import { PlotlyViaCDNModule } from 'angular-plotly.js';
 import * as PlotlyJS from 'plotly.js-dist-min';
 import { PlotlyModule } from 'angular-plotly.js';
 import {RadioButtonModule} from 'primeng/radiobutton';
+import { NgxApexchartsModule } from 'ngx-apexcharts';
+
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { PlotlyViaWindowModule } from 'angular-plotly.js';
+
+ import { StoreModule } from "@ngrx/store";
+ import { featureReducer } from "./store.reducer";
+import { EffectsModule } from "@ngrx/effects";
+ import { FeatureEffects } from "./store.effects";
+
+
+
 PlotlyModule.plotlyjs = PlotlyJS;
 @NgModule({
   declarations: [AppComponent, DialogComponent, BarChartComponent],
@@ -51,7 +61,12 @@ PlotlyModule.plotlyjs = PlotlyJS;
     HttpClientModule,
     SplitterModule,
     RadioButtonModule,
-  ],
+    NgxApexchartsModule,
+     StoreModule.forRoot({ feature: featureReducer }),
+     EffectsModule.forRoot([FeatureEffects])
+  
+   ],
+    
   providers: [],
   bootstrap: [AppComponent],
 })

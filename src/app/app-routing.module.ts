@@ -7,7 +7,7 @@ const routes: Routes = [
   
   { path: 'charts', component:BarChartComponent },
   { path: '', redirectTo: 'charts', pathMatch: 'full' },
- {path:'dialog/:id',component:DialogComponent}
+ {path:'dialog',component:DialogComponent}
 ];
 
 @NgModule({
